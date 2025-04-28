@@ -9,12 +9,32 @@
   if (window.top !== window.self) return;
   if (window.hasRunSpanTypist) return;
   window.hasRunSpanTypist = true;
-
+  
   // ─── Configuration ─────────────────────────────────────────────────
   const DIV_XPATH = "/html/body/div[1]/div/main/section/div[2]/div/div/div[2]";
-  const WORD_PAUSE_MS = 300;
-  const SPEECH_RATE   = 0.9;
-  const SPEECH_PITCH  = 1.1;
+  const WORD_PAUSE_MS = 0;
+  const SPEECH_RATE   = 0.7;
+  const SPEECH_PITCH  = 0.7;
+  // Audio effects
+  const AUDIO_VOLUME = 0.025;
+  const audioUrls = [
+    "https://cdn.pixabay.com/download/audio/2024/08/13/audio_b31955cb8c.mp3?filename=kick-greg-232043.mp3",
+    "https://cdn.pixabay.com/download/audio/2025/03/07/audio_bf3a10b647.mp3?filename=wiese-kick-blau-310489.mp3",
+    "https://cdn.pixabay.com/download/audio/2024/11/13/audio_3edb83bb51.mp3?filename=kick-drum-263837.mp3",
+    "https://cdn.pixabay.com/download/audio/2025/04/17/audio_b3573a7dd8.mp3?filename=kick-328873.mp3",
+    "https://cdn.pixabay.com/download/audio/2024/09/16/audio_29f423f32b.mp3?filename=tr808-kick-drum-241401.mp3",
+    "https://cdn.pixabay.com/download/audio/2024/09/16/audio_2d8da4b6cc.mp3?filename=tr909-snare-drum-241413.mp3",
+    "https://cdn.pixabay.com/download/audio/2024/09/16/audio_ad9c4af8f5.mp3?filename=tr707-snare-drum-241412.mp3",
+    "https://cdn.pixabay.com/download/audio/2024/09/16/audio_57c811e0c0.mp3?filename=tr808-snare-drum-241403.mp3",
+    "https://cdn.pixabay.com/download/audio/2024/09/16/audio_fc5bc92d9b.mp3?filename=tr707-kick-drum-241400.mp3",
+    "https://cdn.pixabay.com/download/audio/2025/04/17/audio_f2ab2014dd.mp3?filename=snare-328872.mp3",
+    "https://cdn.pixabay.com/download/audio/2022/03/26/audio_6d664dc42b.mp3?filename=bass-drum-107154.mp3",
+    "https://cdn.pixabay.com/download/audio/2022/03/15/audio_bebf451003.mp3?filename=big-round-soft-kick-drum-87898.mp3",
+    "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c1753eca44.mp3?filename=snarenormal3-86814.mp3",
+    "https://cdn.pixabay.com/download/audio/2024/09/21/audio_070c505e7b.mp3?filename=snare-3-243039.mp3",
+    "https://cdn.pixabay.com/download/audio/2024/09/16/audio_206d44d0e7.mp3?filename=tr909-kick-drum-241402.mp3"
+  ];
+
 
   async function waitForXPath(xpath, timeout=15000, interval=200) {
     const start = Date.now();
@@ -95,6 +115,11 @@
       if (pressed === expected) {
         console.log("✔️ correct");
         charIdx++;
+
+        const randomUrl = audioUrls[Math.floor(Math.random() * audioUrls.length)];
+        const audio = new Audio(randomUrl);
+        audio.volume = AUDIO_VOLUME;
+        audio.play().catch(e => console.error("Audio play failed:", e));
       } else {
         console.log("❌ wrong");
       }
