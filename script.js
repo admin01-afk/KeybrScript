@@ -6,7 +6,6 @@
 // ==/UserScript==
 
 (function() {
-
   // === Prevent multiple injections ===
   if (window.top !== window.self) {
     console.log("Skipping iframe:", window.location.href);
